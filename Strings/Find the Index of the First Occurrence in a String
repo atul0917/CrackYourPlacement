@@ -1,0 +1,32 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
+class Solution {
+    public int strStr(String haystack, String needle) {
+        int n = haystack.length();
+        int m = needle.length();
+        
+        if (m == 0) {
+            return 0; // If needle is an empty string, return 0
+        }
+        
+        for (int i = 0; i <= n - m; i++) {
+            Queue<Character> q = new LinkedList<>();
+            for (char ch : needle.toCharArray()) {
+                q.add(ch);
+            }
+            
+            int j = i;
+            while (!q.isEmpty() && j < n && haystack.charAt(j) == q.peek()) {
+                q.poll();
+                j++;
+            }
+            
+            if (q.isEmpty()) {
+                return i; // Found the needle, return starting index
+            }
+        }
+        
+        return -1; // Needle not found in haystack
+    }
+}
